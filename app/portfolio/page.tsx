@@ -95,7 +95,7 @@ export default function PortfolioPage() {
     }
   };
 
-  const isLoggedIn = status === "authenticated" && session;
+  const isLoggedIn = status === "authenticated" && !!session;
 
   if (loading) {
     return (

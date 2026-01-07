@@ -103,10 +103,26 @@ const PortfolioDetailModal = ({
     "rgba(55, 53, 47, 0.8)"
   );
 
+  const fetchProject = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/projects/${projectId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setProject(data);
+      }
+    } catch (error) {
+      console.error("Error fetching project:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (projectId) {
       fetchProject();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
   useEffect(() => {
@@ -146,21 +162,6 @@ const PortfolioDetailModal = ({
       );
     }
   }, [project]);
-
-  const fetchProject = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`/api/projects/${projectId}`);
-      if (response.ok) {
-        const data = await response.json();
-        setProject(data);
-      }
-    } catch (error) {
-      console.error("Error fetching project:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
     if (projectId) {
