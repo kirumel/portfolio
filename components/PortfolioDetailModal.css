@@ -1,0 +1,1559 @@
+.portfolio-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease;
+  backdrop-filter: blur(12px);
+  flex-direction: row;
+}
+
+/* 사이드 패널 (오른쪽) - 미니멀 플로팅 */
+.portfolio-side-panel {
+  position: fixed;
+  top: 120px;
+  right: calc((100vw - 850px) / 2 - 110px);
+  width: 90px;
+  background: transparent;
+  backdrop-filter: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  z-index: 3002;
+  animation: slideInRight 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+}
+
+.portfolio-side-panel-right {
+  order: initial;
+}
+
+/* 모바일에서는 사이드 패널을 상단 우측에 알약 모양으로 배치 */
+@media (max-width: 1024px) {
+  .portfolio-detail-overlay {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .portfolio-side-panel {
+    position: fixed;
+    top: auto;
+    bottom: 16px;
+    left: 16px;
+    right: auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    max-width: calc(100vw - 32px);
+    border-radius: 20px;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    z-index: 3002;
+    height: auto;
+    max-height: none;
+  }
+
+  .portfolio-side-panel .side-panel-title {
+    font-size: 7px;
+    margin-bottom: 10px;
+    letter-spacing: 1.5px;
+    display: none; /* 모바일에서 숨김 */
+  }
+
+  .portfolio-side-panel .side-panel-client-image img {
+    width: 30px !important;
+    height: 30px !important;
+    border-width: 2px;
+  }
+
+  .portfolio-side-panel .side-panel-client-name {
+    font-size: 9px;
+  }
+
+  .portfolio-side-panel .side-panel-client-role {
+    font-size: 7px;
+  }
+
+  .portfolio-side-panel .side-panel-link svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .portfolio-side-panel .side-panel-links {
+    gap: 8px;
+  }
+
+  .portfolio-side-panel .side-panel-profile-section {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .portfolio-side-panel .side-panel-profile-main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+
+  .portfolio-side-panel .side-panel-client-info {
+    text-align: left;
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .portfolio-side-panel .side-panel-links {
+    margin-top: 0;
+    margin-bottom: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 0;
+    gap: 6px;
+  }
+
+  .portfolio-detail-modal {
+    order: initial;
+    max-width: 100%;
+    border-radius: 0;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.side-panel-title {
+  font-size: 8px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 18px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.side-panel-empty {
+  font-size: 10px;
+  color: rgba(55, 53, 47, 0.35);
+  padding: 8px 0;
+  font-style: italic;
+}
+
+.side-panel-item {
+  margin-bottom: 24px;
+}
+
+.side-panel-item:last-child {
+  margin-bottom: 0;
+}
+
+.side-panel-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(55, 53, 47, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+}
+
+.side-panel-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(55, 53, 47, 0.9);
+  line-height: 1.6;
+}
+
+.side-panel-tools,
+.side-panel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.side-panel-tool {
+  display: inline-block;
+  background: rgba(46, 170, 220, 0.1);
+  color: rgb(46, 170, 220);
+  padding: 6px 12px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(46, 170, 220, 0.2);
+}
+
+.side-panel-tag {
+  display: inline-block;
+  background: rgba(55, 53, 47, 0.08);
+  color: rgba(55, 53, 47, 0.7);
+  padding: 6px 12px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid rgba(55, 53, 47, 0.12);
+}
+
+/* 클라이언트 정보 패널 스타일 */
+.side-panel-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 65vh;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.side-panel-edit::-webkit-scrollbar {
+  width: 3px;
+}
+
+.side-panel-edit::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.side-panel-edit::-webkit-scrollbar-thumb {
+  background: rgba(55, 53, 47, 0.2);
+  border-radius: 2px;
+}
+
+.side-panel-edit::-webkit-scrollbar-thumb:hover {
+  background: rgba(55, 53, 47, 0.3);
+}
+
+.side-panel-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.side-panel-field label {
+  font-size: 8px;
+  font-weight: 700;
+  color: rgba(55, 53, 47, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.side-panel-input {
+  width: 100%;
+  padding: 5px 6px;
+  border: 1px solid rgba(55, 53, 47, 0.12);
+  border-radius: 3px;
+  font-size: 10px;
+  background: white;
+  color: rgba(55, 53, 47, 0.85);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  transition: all 0.2s ease;
+}
+
+.side-panel-input:focus {
+  outline: none;
+  border-color: rgba(46, 170, 220, 0.5);
+  box-shadow: 0 0 0 2px rgba(46, 170, 220, 0.1);
+}
+
+.side-panel-image-preview {
+  margin-top: 6px;
+  display: flex;
+  justify-content: center;
+}
+
+/* 세로 배치 미니멀 스타일 (기본 - PC) */
+.side-panel-profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.side-panel-profile-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.side-panel-profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.side-panel-client-image {
+  flex-shrink: 0;
+}
+
+.side-panel-client-image img {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  border: 2.5px solid rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.side-panel-client-image img:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 1);
+}
+
+.side-panel-client-info {
+  text-align: center;
+  width: 100%;
+}
+
+.side-panel-client-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 1);
+  margin: 0 0 4px 0;
+  padding: 0;
+  line-height: 1.3;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -0.02em;
+  word-break: break-word;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.side-panel-client-role {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+.side-panel-links {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin-top: 6px;
+  padding-left: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.side-panel-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+}
+
+.side-panel-link-youtube {
+  color: rgba(255, 255, 255, 0.9);
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.side-panel-link-youtube:hover {
+  color: rgb(255, 255, 255);
+  transform: scale(1.25) translateY(-3px);
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+}
+
+.side-panel-link-twitter {
+  color: rgba(255, 255, 255, 0.9);
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.side-panel-link-twitter:hover {
+  color: rgb(255, 255, 255);
+  transform: scale(1.25) translateY(-3px);
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+}
+
+.side-panel-link svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.portfolio-detail-modal {
+  position: relative;
+  width: 100%;
+  max-width: 850px;
+  height: 100vh;
+  max-height: 100vh;
+  background: #ffffff;
+  border-radius: 0;
+  box-sizing: border-box;
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 상단 고정 헤더 바 */
+.portfolio-detail-header-bar {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 3001;
+  padding: 16px 32px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.portfolio-detail-header-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.portfolio-detail-header-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(55, 53, 47, 0.85);
+  white-space: nowrap;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  flex-shrink: 0;
+}
+
+.portfolio-detail-header-title-input {
+  width: auto;
+  min-width: 150px;
+  max-width: 300px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(55, 53, 47, 0.85);
+  padding: 0;
+  outline: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  border-bottom: 1px solid rgba(55, 53, 47, 0.2);
+}
+
+.portfolio-detail-header-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+  overflow: hidden;
+}
+
+.portfolio-detail-header-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.portfolio-detail-header-tags-input {
+  flex: 1;
+  min-width: 150px;
+  padding: 6px 10px;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 400;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.portfolio-detail-header-tags-input:focus {
+  border-color: rgba(55, 53, 47, 0.3);
+}
+
+.portfolio-detail-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.portfolio-detail-edit-btn,
+.portfolio-detail-save-btn,
+.portfolio-detail-cancel-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: rgba(55, 53, 47, 0.08);
+  color: rgba(55, 53, 47, 0.8);
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+.portfolio-detail-edit-btn:hover {
+  background: rgba(55, 53, 47, 0.12);
+  color: rgba(55, 53, 47, 1);
+}
+
+.portfolio-detail-save-btn {
+  background: rgba(46, 170, 220, 0.1);
+  color: rgb(46, 170, 220);
+}
+
+.portfolio-detail-save-btn:hover:not(:disabled) {
+  background: rgba(46, 170, 220, 0.15);
+}
+
+.portfolio-detail-save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.portfolio-detail-cancel-btn {
+  background: rgba(235, 87, 87, 0.1);
+  color: rgb(235, 87, 87);
+}
+
+.portfolio-detail-cancel-btn:hover {
+  background: rgba(235, 87, 87, 0.15);
+}
+
+.portfolio-detail-close {
+  width: 28px;
+  height: 28px;
+  background: rgba(55, 53, 47, 0.08);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.portfolio-detail-close:hover {
+  background: rgba(55, 53, 47, 0.12);
+}
+
+.portfolio-detail-close svg {
+  color: rgba(55, 53, 47, 0.6);
+  width: 16px;
+  height: 16px;
+}
+
+.portfolio-detail-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  background: #ffffff;
+  min-height: 0;
+}
+
+/* 헤더 이미지 섹션 - 전체 너비 */
+.portfolio-detail-header {
+  width: 100%;
+  position: relative;
+  background: transparent;
+  margin-bottom: 0;
+}
+
+.portfolio-detail-image-wrapper {
+  display: flex;
+  width: 100%;
+  height: 30vh;
+  border-radius: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(46, 170, 220, 0.05),
+    rgba(55, 53, 47, 0.02)
+  );
+  margin: 0;
+  position: relative;
+}
+
+.portfolio-detail-image-wrapper img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* 이미지 위 오버레이 */
+.portfolio-detail-hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px 35px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.568) 0%,
+    rgba(0, 0, 0, 0.596) 50%,
+    rgba(0, 0, 0, 0.2) 80%,
+    transparent 100%
+  );
+  z-index: 2;
+}
+
+.portfolio-detail-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.portfolio-detail-hero-category {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.portfolio-detail-hero-date {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.portfolio-detail-hero-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+.portfolio-detail-hero-title-input {
+  font-size: 42px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 4px 0;
+  width: 100%;
+  outline: none;
+}
+
+.portfolio-detail-hero-title-input:focus {
+  border-bottom-color: rgba(255, 255, 255, 0.6);
+}
+
+.portfolio-detail-hero-title-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.portfolio-detail-hero-category-input {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  outline: none;
+}
+
+.portfolio-detail-hero-category-input:focus {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.portfolio-detail-hero-category-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 메인 콘텐츠 영역 (사이드바 제거) */
+.portfolio-detail-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 48px 56px 64px;
+}
+
+.portfolio-detail-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.portfolio-detail-category {
+  display: inline-block;
+  background: linear-gradient(
+    135deg,
+    rgba(46, 170, 220, 0.1),
+    rgba(46, 170, 220, 0.05)
+  );
+  color: rgb(46, 170, 220);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.portfolio-detail-date {
+  color: rgba(55, 53, 47, 0.45);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+.portfolio-detail-title {
+  font-size: 44px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 8px 0 32px 0;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+.portfolio-detail-title-input {
+  font-size: 42px;
+  font-weight: 600;
+  color: rgba(55, 53, 47, 1);
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  background: transparent;
+  border-bottom: 1px solid rgba(55, 53, 47, 0.12);
+}
+
+.portfolio-detail-title-input:focus {
+  outline: none;
+  border-bottom-color: rgba(55, 53, 47, 0.25);
+}
+
+.portfolio-detail-category-input {
+  display: inline-block;
+  background: rgba(55, 53, 47, 0.08);
+  color: rgba(55, 53, 47, 0.6);
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  min-width: 100px;
+}
+
+.portfolio-detail-category-input:focus {
+  outline: none;
+  border-color: rgba(55, 53, 47, 0.3);
+  background: rgba(55, 53, 47, 0.12);
+}
+
+.portfolio-detail-tags-input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 3px;
+  font-size: 14px;
+  margin-top: 16px;
+  background: transparent;
+  color: rgba(55, 53, 47, 0.8);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, "Apple Color Emoji", Arial, sans-serif;
+}
+
+.portfolio-detail-tags-input:focus {
+  outline: none;
+  border-color: rgba(55, 53, 47, 0.3);
+}
+
+.portfolio-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 0;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.portfolio-detail-tag {
+  display: inline-block;
+  background: rgba(55, 53, 47, 0.05);
+  color: rgba(55, 53, 47, 0.7);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid rgba(55, 53, 47, 0.08);
+  letter-spacing: 0.2px;
+  transition: all 0.2s ease;
+}
+
+.portfolio-detail-tag:hover {
+  background: rgba(55, 53, 47, 0.08);
+  border-color: rgba(55, 53, 47, 0.12);
+}
+
+/* 프로젝트 정보 박스 */
+.portfolio-detail-project-info {
+  background: linear-gradient(
+    135deg,
+    rgba(46, 170, 220, 0.03),
+    rgba(46, 170, 220, 0.01)
+  );
+  border: 1px solid rgba(46, 170, 220, 0.1);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.project-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.project-info-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(55, 53, 47, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.project-info-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(55, 53, 47, 0.85);
+  line-height: 1.5;
+}
+
+/* 프로젝트 정보 편집 */
+.portfolio-detail-project-info-edit {
+  background: rgba(55, 53, 47, 0.03);
+  border: 1px solid rgba(55, 53, 47, 0.1);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.project-info-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-info-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(55, 53, 47, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.project-info-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  color: rgba(55, 53, 47, 0.85);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, "Apple Color Emoji", Arial, sans-serif;
+}
+
+.project-info-input:focus {
+  outline: none;
+  border-color: rgba(46, 170, 220, 0.5);
+  box-shadow: 0 0 0 3px rgba(46, 170, 220, 0.1);
+}
+
+.portfolio-detail-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: rgba(55, 53, 47, 0.5);
+}
+
+.portfolio-detail-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 40px;
+  color: rgba(55, 53, 47, 0.7);
+}
+
+.portfolio-detail-error button {
+  margin-top: 16px;
+  padding: 8px 16px;
+  background: rgba(55, 53, 47, 0.08);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: rgba(55, 53, 47, 0.8);
+}
+
+.portfolio-detail-blocks {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.portfolio-detail-blocks-edit {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+/* 뷰어 스타일 설정 */
+.viewer-style-settings {
+  margin-bottom: 32px;
+  padding: 20px;
+  background: rgba(46, 170, 220, 0.03);
+  border: 1px solid rgba(46, 170, 220, 0.1);
+  border-radius: 8px;
+}
+
+.viewer-style-settings summary {
+  list-style: none;
+  padding: 4px 0;
+}
+
+.viewer-style-settings summary::-webkit-details-marker {
+  display: none;
+}
+
+.viewer-style-settings[open] summary {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(46, 170, 220, 0.1);
+}
+
+/* 클라이언트 정보 설정 */
+.client-info-settings {
+  margin-bottom: 32px;
+  padding: 20px;
+  background: rgba(55, 53, 47, 0.02);
+  border: 1px solid rgba(55, 53, 47, 0.08);
+  border-radius: 8px;
+}
+
+.client-info-settings summary {
+  list-style: none;
+  padding: 4px 0;
+}
+
+.client-info-settings summary::-webkit-details-marker {
+  display: none;
+}
+
+.client-info-settings[open] summary {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(55, 53, 47, 0.08);
+}
+
+.portfolio-detail-block {
+  width: 100%;
+}
+
+/* 포트폴리오 콘텐츠 텍스트 블록 - 에디터와 동일한 스타일 */
+.portfolio-detail-block-text {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 18px;
+  line-height: 1.8;
+  color: rgba(55, 53, 47, 0.85);
+  margin: 0;
+  padding: 0;
+  word-break: break-word;
+}
+
+.portfolio-detail-block-text h1 {
+  font-size: 36px;
+  font-weight: 600;
+  margin: 24px 0 16px;
+  line-height: 1.3;
+}
+
+.portfolio-detail-block-text h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 20px 0 12px;
+  line-height: 1.3;
+}
+
+.portfolio-detail-block-text h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 16px 0 10px;
+  line-height: 1.3;
+}
+
+.portfolio-detail-block-text p {
+  margin: 0 0 5px;
+  line-height: 1.5;
+}
+
+.portfolio-detail-block-text img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 24px 0;
+  border-radius: 4px;
+}
+
+.portfolio-detail-block-text iframe {
+  max-width: 100%;
+  display: block;
+  border: none;
+}
+
+.portfolio-detail-block-text .youtube-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  margin: 24px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.portfolio-detail-block-text .youtube-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 6px;
+}
+
+.portfolio-detail-block-text video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 24px 0;
+}
+
+.portfolio-detail-block-text ul,
+.portfolio-detail-block-text ol {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.portfolio-detail-block-text li {
+  margin: 8px 0;
+  line-height: 1.8;
+}
+
+.portfolio-detail-block-text a {
+  color: rgba(55, 53, 47, 0.7);
+  text-decoration: underline;
+  text-decoration-color: rgba(55, 53, 47, 0.3);
+}
+
+.portfolio-detail-block-text a:hover {
+  color: rgba(55, 53, 47, 0.9);
+  text-decoration-color: rgba(55, 53, 47, 0.5);
+}
+
+.portfolio-detail-block-text strong {
+  font-weight: 600;
+}
+
+.portfolio-detail-block-text em {
+  font-style: italic;
+}
+
+.portfolio-detail-block-text table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+}
+
+.portfolio-detail-block-text table th,
+.portfolio-detail-block-text table td {
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.portfolio-detail-block-text table th {
+  background: rgba(55, 53, 47, 0.05);
+  font-weight: 600;
+}
+
+.portfolio-detail-block-text table tr:hover {
+  background: rgba(55, 53, 47, 0.02);
+}
+
+/* 정렬 스타일 보존 */
+.portfolio-detail-block-text p[style*="text-align: center"],
+.portfolio-detail-block-text p[style*="text-align:center"] {
+  text-align: center !important;
+}
+
+.portfolio-detail-block-text p[style*="text-align: right"],
+.portfolio-detail-block-text p[style*="text-align:right"] {
+  text-align: right !important;
+}
+
+.portfolio-detail-block-text p[style*="text-align: justify"],
+.portfolio-detail-block-text p[style*="text-align:justify"] {
+  text-align: justify !important;
+}
+
+.portfolio-detail-block-text p[style*="text-align: left"],
+.portfolio-detail-block-text p[style*="text-align:left"] {
+  text-align: left !important;
+}
+
+/* iframe 정렬 지원 */
+.portfolio-detail-block-text p[style*="text-align: center"] iframe,
+.portfolio-detail-block-text p[style*="text-align:center"] iframe {
+  display: block;
+  margin: 0 auto;
+}
+
+.portfolio-detail-block-text p[style*="text-align: right"] iframe,
+.portfolio-detail-block-text p[style*="text-align:right"] iframe {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.portfolio-detail-block-text p[style*="text-align: left"] iframe,
+.portfolio-detail-block-text p[style*="text-align:left"] iframe {
+  display: inline-block;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.portfolio-detail-block-image {
+  margin: 0;
+}
+
+.portfolio-detail-image-block {
+  width: 100%;
+  border-radius: 0;
+  overflow: hidden;
+  background: rgba(55, 53, 47, 0.02);
+}
+
+.portfolio-detail-image-block img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.portfolio-detail-media {
+  margin-top: 48px;
+  padding-top: 48px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.portfolio-detail-section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 24px 0;
+}
+
+.portfolio-detail-video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 0;
+  overflow: hidden;
+  background: rgba(55, 53, 47, 0.02);
+  margin: 0 auto;
+}
+
+.portfolio-detail-video {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.portfolio-detail-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.portfolio-detail-gallery-item {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .portfolio-detail-overlay {
+    padding: 0;
+    gap: 0;
+  }
+
+  .portfolio-detail-modal {
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .portfolio-detail-main {
+    padding: 32px 24px 48px;
+  }
+
+  .portfolio-detail-project-info,
+  .portfolio-detail-project-info-edit {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-detail-modal {
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .portfolio-detail-header-bar {
+    padding: 12px 16px;
+    flex-shrink: 0;
+  }
+
+  .portfolio-detail-header-title {
+    font-size: 14px;
+  }
+
+  .portfolio-detail-main {
+    padding: 24px 16px 32px;
+  }
+
+  .portfolio-detail-hero-overlay {
+    padding: 24px 16px;
+  }
+
+  .portfolio-detail-title {
+    font-size: 28px;
+  }
+
+  .portfolio-detail-title-input {
+    font-size: 28px;
+  }
+
+  .portfolio-detail-meta {
+    margin-bottom: 8px;
+  }
+
+  .portfolio-detail-category {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  .portfolio-detail-date {
+    font-size: 12px;
+  }
+
+  .portfolio-detail-tag {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  .portfolio-detail-header {
+    margin-bottom: 0;
+  }
+
+  .portfolio-detail-project-info,
+  .portfolio-detail-project-info-edit {
+    padding: 16px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .portfolio-detail-block-text {
+    font-size: 16px;
+  }
+
+  /* 모바일에서 사이드 패널 스타일 */
+  .portfolio-side-panel {
+    padding: 6px 10px;
+    min-width: 200px;
+    border-radius: 20px;
+  }
+
+  .portfolio-side-panel .side-panel-profile-section {
+    gap: 6px;
+  }
+
+  .side-panel-profile-section {
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .side-panel-profile-main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .side-panel-client-info {
+    text-align: left;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .side-panel-client-image img {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .side-panel-client-name {
+    font-size: 11px;
+  }
+
+  .side-panel-client-role {
+    font-size: 9px;
+  }
+
+  .side-panel-links {
+    gap: 8px;
+    margin-top: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 0;
+  }
+
+  .side-panel-title {
+    display: none; /* 모바일에서 숨김 */
+  }
+
+  .side-panel-link svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-detail-main {
+    padding: 16px 12px 24px;
+  }
+
+  .portfolio-detail-title {
+    font-size: 24px;
+  }
+
+  .portfolio-detail-title-input {
+    font-size: 24px;
+  }
+
+  .portfolio-detail-block-text {
+    font-size: 15px;
+  }
+
+  .portfolio-detail-header-bar {
+    padding: 10px 12px;
+    flex-shrink: 0;
+  }
+
+  .portfolio-detail-actions {
+    gap: 4px;
+  }
+
+  .portfolio-detail-edit-btn,
+  .portfolio-detail-save-btn,
+  .portfolio-detail-cancel-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  .side-panel-title {
+    font-size: 9px;
+    display: none; /* 모바일에서 숨김 */
+  }
+
+  .side-panel-profile-section {
+    gap: 6px;
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .side-panel-profile-main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .side-panel-client-info {
+    text-align: left;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .side-panel-client-image img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .side-panel-client-name {
+    font-size: 10px;
+  }
+
+  .side-panel-client-role {
+    font-size: 8px;
+  }
+
+  .side-panel-links {
+    margin-top: 0;
+    margin-bottom: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 0;
+    gap: 6px;
+  }
+
+  .side-panel-link svg {
+    width: 14px;
+    height: 14px;
+  }
+}

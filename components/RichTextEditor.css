@@ -1,0 +1,724 @@
+.classic-editor-wrapper {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 4px;
+}
+
+/* 툴바 */
+.classic-editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(55, 53, 47, 0.08);
+  background: #fafafa;
+  flex-wrap: wrap;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-right: 8px;
+  border-right: 1px solid rgba(55, 53, 47, 0.08);
+}
+
+.toolbar-group:last-child {
+  border-right: none;
+}
+
+.toolbar-group-right {
+  margin-left: auto;
+  border-right: none;
+  padding-right: 0;
+}
+
+.toolbar-btn {
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 3px;
+  font-size: 14px;
+  cursor: pointer;
+  color: rgba(55, 53, 47, 0.7);
+  transition: all 0.15s ease;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+}
+
+.toolbar-btn:hover {
+  background: rgba(55, 53, 47, 0.08);
+  border-color: rgba(55, 53, 47, 0.16);
+  color: rgba(55, 53, 47, 0.9);
+}
+
+.toolbar-btn:active {
+  background: rgba(55, 53, 47, 0.12);
+}
+
+.toolbar-btn strong,
+.toolbar-btn em,
+.toolbar-btn u,
+.toolbar-btn s {
+  font-weight: 600;
+  font-style: normal;
+  text-decoration: none;
+}
+
+/* 에디터 영역 */
+.classic-editor {
+  min-height: 400px;
+  padding: 16px;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 18px;
+  line-height: 1.8;
+  color: rgba(55, 53, 47, 0.85);
+  outline: none;
+  overflow-y: auto;
+}
+
+.classic-editor:empty:before {
+  content: attr(data-placeholder);
+  color: rgba(55, 53, 47, 0.4);
+  pointer-events: none;
+}
+
+.classic-editor h1 {
+  font-size: 36px;
+  font-weight: 600;
+  margin: 24px 0 16px;
+  line-height: 1.3;
+  /* font-family 제거 - 사용자가 선택한 폰트 적용 가능하도록 */
+}
+
+.classic-editor h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 20px 0 12px;
+  line-height: 1.3;
+  /* font-family 제거 - 사용자가 선택한 폰트 적용 가능하도록 */
+}
+
+.classic-editor h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 16px 0 10px;
+  line-height: 1.3;
+  /* font-family 제거 - 사용자가 선택한 폰트 적용 가능하도록 */
+}
+
+.classic-editor p {
+  margin: 0 0 5px;
+  line-height: 1.5;
+}
+
+.classic-editor img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 24px 0;
+  border-radius: 4px;
+}
+
+.classic-editor iframe {
+  max-width: 100%;
+  display: block;
+  border: none;
+}
+
+.classic-editor .youtube-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: visible;
+  margin: 24px 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.classic-editor .youtube-wrapper:hover {
+  border-color: rgba(46, 170, 220, 0.5);
+  box-shadow: 0 0 0 4px rgba(46, 170, 220, 0.1);
+}
+
+.classic-editor .youtube-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 6px;
+}
+
+.youtube-controls {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  display: none;
+  gap: 4px;
+}
+
+.youtube-edit-btn,
+.youtube-delete-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid white !important;
+  color: white !important;
+  cursor: pointer !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.youtube-edit-btn {
+  background: rgba(46, 170, 220, 0.9) !important;
+  font-size: 14px;
+}
+
+.youtube-edit-btn:hover {
+  background: rgba(46, 170, 220, 1) !important;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(46, 170, 220, 0.4);
+}
+
+.youtube-delete-btn {
+  background: rgba(235, 87, 87, 0.9) !important;
+  font-size: 20px;
+}
+
+.youtube-delete-btn:hover {
+  background: rgba(235, 87, 87, 1) !important;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(235, 87, 87, 0.4);
+}
+
+/* 유튜브 버튼 클릭 가능하도록 */
+.youtube-controls button {
+  pointer-events: auto !important;
+}
+
+.classic-editor .youtube-wrapper .youtube-controls {
+  pointer-events: auto !important;
+}
+
+/* 툴바 드롭다운 */
+.toolbar-dropdown {
+  position: relative;
+}
+
+.toolbar-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  background: white;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 140px;
+  overflow: hidden;
+}
+
+.toolbar-dropdown-menu button {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: rgba(55, 53, 47, 0.85);
+  transition: background 0.15s ease;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+
+.toolbar-dropdown-menu button:hover {
+  background: rgba(55, 53, 47, 0.08);
+}
+
+.font-family-menu {
+  min-width: 180px;
+}
+
+.font-family-menu button span {
+  display: block;
+  font-size: 15px;
+}
+
+/* 색상 선택기 */
+.color-picker-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  background: white;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 12px;
+}
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  width: 180px;
+}
+
+.color-btn {
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(55, 53, 47, 0.12);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.color-btn:hover {
+  transform: scale(1.15);
+  border-color: rgba(55, 53, 47, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.color-indicator {
+  width: 12px;
+  height: 2px;
+  display: block;
+  margin-top: 2px;
+}
+
+.classic-editor video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 24px 0;
+}
+
+.classic-editor ul,
+.classic-editor ol {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.classic-editor li {
+  margin: 8px 0;
+  line-height: 1.8;
+}
+
+.classic-editor a {
+  color: rgba(55, 53, 47, 0.7);
+  text-decoration: underline;
+  text-decoration-color: rgba(55, 53, 47, 0.3);
+}
+
+.classic-editor a:hover {
+  color: rgba(55, 53, 47, 0.9);
+  text-decoration-color: rgba(55, 53, 47, 0.5);
+}
+
+.classic-editor strong {
+  font-weight: 600;
+}
+
+.classic-editor em {
+  font-style: italic;
+}
+
+.classic-editor table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+}
+
+.classic-editor table th,
+.classic-editor table td {
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.classic-editor table th {
+  background: rgba(55, 53, 47, 0.05);
+  font-weight: 600;
+}
+
+.classic-editor table tr:hover {
+  background: rgba(55, 53, 47, 0.02);
+}
+
+/* HTML 보기 모드 */
+.html-view-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.html-view-textarea {
+  width: 100%;
+  min-height: 300px;
+  padding: 12px;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 4px;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(55, 53, 47, 0.85);
+  background: #ffffff;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.html-view-textarea:focus {
+  outline: none;
+  border-color: rgba(55, 53, 47, 0.3);
+}
+
+.html-preview-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(55, 53, 47, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.html-preview {
+  min-height: 400px;
+  padding: 16px;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 4px;
+  background: #ffffff;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 18px;
+  line-height: 1.8;
+  color: rgba(55, 53, 47, 0.85);
+  /* 에디터와 완전히 동일한 스타일 */
+}
+
+.html-preview h1 {
+  font-size: 36px;
+  font-weight: 600;
+  margin: 24px 0 16px;
+  line-height: 1.3;
+  /* font-family 제거 - 인라인 스타일 우선 적용 */
+}
+
+.html-preview h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 20px 0 12px;
+  line-height: 1.3;
+  /* font-family 제거 - 인라인 스타일 우선 적용 */
+}
+
+.html-preview h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 16px 0 10px;
+  line-height: 1.3;
+  /* font-family 제거 - 인라인 스타일 우선 적용 */
+}
+
+.html-preview p {
+  margin: 0 0 5px;
+  line-height: 1.5;
+}
+
+.html-preview img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 24px 0;
+  border-radius: 4px;
+}
+
+.html-preview iframe {
+  max-width: 100%;
+  display: block;
+  border: none;
+}
+
+.html-preview .youtube-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  margin: 24px 0;
+  border-radius: 8px;
+}
+
+.html-preview .youtube-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 6px;
+}
+
+.html-preview video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 24px 0;
+}
+
+.html-preview ul,
+.html-preview ol {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.html-preview li {
+  margin: 8px 0;
+  line-height: 1.8;
+}
+
+.html-preview a {
+  color: rgba(55, 53, 47, 0.7);
+  text-decoration: underline;
+  text-decoration-color: rgba(55, 53, 47, 0.3);
+}
+
+.html-preview a:hover {
+  color: rgba(55, 53, 47, 0.9);
+  text-decoration-color: rgba(55, 53, 47, 0.5);
+}
+
+.html-preview strong {
+  font-weight: 600;
+}
+
+.html-preview em {
+  font-style: italic;
+}
+
+.html-preview table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+}
+
+.html-preview table th,
+.html-preview table td {
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.html-preview table th {
+  background: rgba(55, 53, 47, 0.05);
+  font-weight: 600;
+}
+
+.html-preview table tr:hover {
+  background: rgba(55, 53, 47, 0.02);
+}
+
+/* 유튜브 모달 */
+.youtube-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.youtube-modal {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  min-width: 400px;
+  max-width: 90%;
+}
+
+.youtube-modal h3 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(55, 53, 47, 0.9);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+
+.youtube-modal-field {
+  margin-bottom: 20px;
+}
+
+.youtube-modal-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(55, 53, 47, 0.8);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+
+.youtube-modal-field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 4px;
+  font-size: 14px;
+  color: rgba(55, 53, 47, 0.85);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  box-sizing: border-box;
+}
+
+.youtube-modal-field input:focus {
+  outline: none;
+  border-color: rgba(55, 53, 47, 0.3);
+}
+
+.youtube-size-buttons,
+.youtube-align-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.youtube-size-buttons button,
+.youtube-align-buttons button {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 1);
+  color: rgba(55, 53, 47, 0.7);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+
+.youtube-size-buttons button:hover,
+.youtube-align-buttons button:hover {
+  background: rgba(55, 53, 47, 0.08);
+  color: rgba(55, 53, 47, 0.9);
+  border-color: rgba(55, 53, 47, 0.25);
+}
+
+.youtube-size-buttons button.active,
+.youtube-align-buttons button.active {
+  background: rgba(46, 170, 220, 0.1);
+  color: rgb(46, 170, 220);
+  border-color: rgb(46, 170, 220);
+}
+
+.youtube-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.youtube-modal-cancel,
+.youtube-modal-confirm {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+
+.youtube-modal-cancel {
+  background: rgba(235, 87, 87, 0.1);
+  color: rgb(235, 87, 87);
+}
+
+.youtube-modal-cancel:hover {
+  background: rgba(235, 87, 87, 0.15);
+}
+
+.youtube-modal-confirm {
+  background: rgba(46, 170, 220, 0.1);
+  color: rgb(46, 170, 220);
+}
+
+.youtube-modal-confirm:hover {
+  background: rgba(46, 170, 220, 0.15);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .classic-editor-toolbar {
+    padding: 6px 8px;
+    gap: 4px;
+  }
+
+  .toolbar-group {
+    padding-right: 4px;
+    gap: 2px;
+  }
+
+  .toolbar-btn {
+    padding: 4px 6px;
+    font-size: 12px;
+    min-width: 24px;
+    height: 24px;
+  }
+
+  .classic-editor {
+    font-size: 16px;
+    padding: 12px;
+    min-height: 300px;
+  }
+
+  .youtube-modal {
+    min-width: auto;
+    width: 90%;
+    padding: 20px;
+  }
+
+  .youtube-size-buttons,
+  .youtube-align-buttons {
+    flex-wrap: wrap;
+  }
+
+  .youtube-size-buttons button,
+  .youtube-align-buttons button {
+    min-width: calc(50% - 4px);
+  }
+}

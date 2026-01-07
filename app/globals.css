@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* 포인트 색상 - 여기서만 변경하면 됩니다 */
+  --primary-color: #1a1a1a;
+  --secondary-color: #4a4a4a;
+  --accent-color: #1a1a1a;
+
+  /* 배경 색상 */
+  --dark-bg: #ffffff;
+  --darker-bg: #f8f9fa;
+
+  /* 텍스트 색상 */
+  --light-text: #1a1a1a;
+  --gray-text: #4a5568;
+  --white-text: #ffffff;
+  --white-text: #ffffff;
+
+  /* 테두리 및 그림자 색상 */
+  --primary-rgba-01: rgba(26, 26, 26, 0.1);
+  --primary-rgba-02: rgba(26, 26, 26, 0.2);
+  --primary-rgba-03: rgba(26, 26, 26, 0.3);
+  --primary-rgba-05: rgba(26, 26, 26, 0.5);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--dark-bg);
+  color: var(--light-text);
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* 스크롤바 숨기기 */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+}
+
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+}
