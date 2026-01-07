@@ -4,8 +4,8 @@ import { Metadata } from "next";
 import { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "Video Designer Portfolio",
-  description: "모션그래픽 디자이너 루멜의 포트폴리오",
+  title: "kirumelWorks",
+  description: "포트폴리오",
 };
 
 interface RootLayoutProps {
@@ -21,4 +21,3 @@ export default function RootLayout({ children }: RootLayoutProps) {
     </html>
   );
 }
-
