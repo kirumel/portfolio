@@ -53,17 +53,19 @@ const AboutCompact = () => {
             <div className="about-compact-left">
               <div className="about-compact-profile-wrapper">
                 <div className="about-compact-profile">
-                  <div className="about-compact-image-wrapper">
-                    <div className="about-compact-image">
-                      <Image
-                        src="/profile.jpg"
-                        alt="Profile"
-                        width={40}
-                        height={40}
-                        className="about-compact-profile-image"
-                      />
+                  <Link href="/#about" className="about-compact-image-link">
+                    <div className="about-compact-image-wrapper">
+                      <div className="about-compact-image">
+                        <Image
+                          src="/profile.jpg"
+                          alt="Profile"
+                          width={40}
+                          height={40}
+                          className="about-compact-profile-image"
+                        />
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                   <div className="about-compact-info">
                     <h3>루멜 (kirumel)</h3>
                     <p>모션 그래픽 디자이너</p>

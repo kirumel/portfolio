@@ -436,6 +436,106 @@ section {
   text-align: left;
 }
 
+@media (max-width: 768px) {
+  .about-info {
+    text-align: center;
+  }
+
+  .profile-header {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .profile-image-wrapper {
+    flex-shrink: 0;
+  }
+
+  .profile-name-wrapper {
+    flex: 0 0 auto;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-header h3 {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .profile-name-wrapper p {
+    margin: 0;
+    font-size: 12px;
+  }
+
+  .profile-description {
+    text-align: center;
+  }
+
+  .profile-description p {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .social-links-about {
+    justify-content: center;
+    display: flex;
+  }
+
+  .social-link-about {
+    width: 24px;
+    height: 24px;
+  }
+
+  .social-link-about svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .about-skills-section {
+    margin-top: 40px;
+  }
+
+  .about-skills-compact {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin-top: 60px;
+  }
+
+  .skill-category-compact {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .skill-category-title-compact {
+    font-size: 12px;
+  }
+
+  .skill-tag {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .skill-tags {
+    justify-content: center;
+  }
+
+  .skills-toggle-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+
+  .about-contact-info {
+    align-items: flex-start;
+  }
+}
+
 .about-profile {
   margin-bottom: 32px;
 }
@@ -443,8 +543,14 @@ section {
 .profile-header {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 16px;
   margin-bottom: 16px;
+}
+
+.profile-name-wrapper {
+  flex: 1;
+  text-align: left;
 }
 
 .profile-image-wrapper {
@@ -557,12 +663,45 @@ section {
 }
 
 /* About Skills - Compact */
+.about-skills-section {
+  margin-top: 100px;
+  text-align: center;
+}
+
+.skills-toggle-btn {
+  padding: 10px 20px;
+  background: var(--darker-bg);
+  border: 1px solid var(--primary-rgba-02);
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--light-text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 24px;
+}
+
+.skills-toggle-btn:hover {
+  background: var(--primary-color);
+  color: #ffffff;
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .skills-toggle-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+}
+
 .about-skills-compact {
   display: flex;
   flex-direction: row;
   gap: 32px;
   align-items: flex-start;
-  margin-top: 100px;
+  justify-content: center;
 }
 
 .skill-category-compact {
@@ -585,6 +724,7 @@ section {
   flex-wrap: wrap;
   gap: 8px;
   width: 100%;
+  justify-content: center;
 }
 
 .skill-tag {
@@ -1088,46 +1228,6 @@ section {
     gap: 40px;
   }
 
-  .about-info {
-    text-align: left;
-  }
-
-  .profile-header {
-    justify-content: flex-start;
-  }
-
-  .profile-description {
-    margin-left: 0;
-    text-align: left;
-    margin-top: 12px;
-  }
-
-  .profile-header h3 {
-    font-size: 22px;
-  }
-
-  .profile-description p {
-    font-size: 14px;
-    line-height: 1.8;
-  }
-
-  .skill-category-title-compact {
-    font-size: 12px;
-  }
-
-  .skill-tag {
-    font-size: 12px;
-    padding: 5px 10px;
-  }
-
-  .about-contact-info {
-    align-items: flex-start;
-  }
-
-  .social-links-about {
-    justify-content: flex-start;
-  }
-
   .portfolio-preview-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
@@ -1152,12 +1252,6 @@ section {
 
   .section-title {
     font-size: 28px;
-  }
-
-  .about-skills-compact {
-    flex-direction: column;
-    gap: 24px;
-    margin-top: 60px;
   }
 }
 
@@ -1259,9 +1353,23 @@ section {
     font-size: 24px;
   }
 
-  .about-skills-compact {
+  .about-skills-section {
     margin-top: 40px;
+  }
+
+  .about-skills-compact {
+    flex-direction: column;
     gap: 20px;
+    align-items: center;
+  }
+
+  .skill-category-compact {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .skill-tags {
+    justify-content: center;
   }
 
   .about-header-image {

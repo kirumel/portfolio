@@ -18,6 +18,7 @@ const About = () => {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [previewProjects, setPreviewProjects] = useState<Project[]>([]);
+  const [showSkills, setShowSkills] = useState(false);
 
   useEffect(() => {
     // 포트폴리오 미리보기 로드
@@ -120,7 +121,7 @@ const About = () => {
                     className="profile-image"
                   />
                 </div>
-                <div>
+                <div className="profile-name-wrapper">
                   <h3>kirumel</h3>
                   <p>@kirumel</p>
                 </div>
@@ -175,10 +176,10 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
           >
             <iframe
-              src="https://www.youtube.com/embed/4X0_VwKBu6M?si=1h65M1zEx_VbDahz"
+              src="https://www.youtube.com/embed/-IhE_Vu8iC0?si=WxdwVbHh8x7duJ-j "
               title="YouTube video player"
               frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allow="accelerometer; autoplay; clipboard-wrsite; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
             ></iframe>
@@ -187,23 +188,35 @@ const About = () => {
 
         {/* 기술 스택 - 간결하게 */}
         <motion.div
-          className="about-skills-compact"
+          className="about-skills-section"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          {skillCategories.map((category, categoryIndex) => (
-            <div key={category.title} className="skill-category-compact">
-              <h4 className="skill-category-title-compact">{category.title}</h4>
-              <div className="skill-tags">
-                {category.skills.map((skill) => (
-                  <span key={skill.name} className="skill-tag">
-                    {skill.name}
-                  </span>
-                ))}
-              </div>
+          <button
+            className="skills-toggle-btn"
+            onClick={() => setShowSkills(!showSkills)}
+          >
+            {showSkills ? "기술 스택 숨기기" : "기술 스택 보기"}
+          </button>
+          {showSkills && (
+            <div className="about-skills-compact">
+              {skillCategories.map((category, categoryIndex) => (
+                <div key={category.title} className="skill-category-compact">
+                  <h4 className="skill-category-title-compact">
+                    {category.title}
+                  </h4>
+                  <div className="skill-tags">
+                    {category.skills.map((skill) => (
+                      <span key={skill.name} className="skill-tag">
+                        {skill.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </motion.div>
 
         {/* 포트폴리오 미리보기 */}

@@ -25,6 +25,7 @@
 .portfolio-section {
   padding: 10px 0;
   flex: 1;
+  order: 0;
 }
 
 .portfolio-page .btn {
@@ -102,6 +103,16 @@
   gap: 12px;
 }
 
+.about-compact-image-link {
+  flex-shrink: 0;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.about-compact-image-link:hover {
+  transform: scale(1.05);
+}
+
 .about-compact-image-wrapper {
   flex-shrink: 0;
   width: 50px;
@@ -109,6 +120,7 @@
   border-radius: 50%;
   padding: 2px;
   background: linear-gradient(135deg, rgba(17, 0, 255, 0.8), rgb(88, 255, 247));
+  cursor: pointer;
 }
 
 .about-compact-image {
@@ -236,43 +248,38 @@
   }
 
   .about-compact {
-    padding: 20px 0;
+    padding: 10px 0;
   }
 
   .about-compact-main {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
     gap: 16px;
   }
 
   .about-compact-left {
-    width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
     gap: 16px;
   }
 
   .about-compact-profile-wrapper {
-    width: 100%;
-    gap: 10px;
+    gap: 5px;
   }
 
   .about-compact-profile {
-    gap: 10px;
-  }
-
-  .about-compact-social {
-    padding-left: 0;
+    gap: 12px;
   }
 
   .about-compact-image-wrapper {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     padding: 2px;
   }
 
   .about-compact-info h3 {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .about-compact-info p {
@@ -280,25 +287,31 @@
   }
 
   .about-compact-actions {
-    width: 100%;
-    padding-left: 0;
-    border-left: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 12px;
-    justify-content: space-between;
+    padding-left: 16px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .about-compact-image-link {
+    cursor: pointer;
+  }
+
+  .about-compact-image-link:hover {
+    transform: scale(1.08);
   }
 
   .about-compact-right {
-    width: 100%;
-    justify-content: flex-start;
-    margin-top: -8px;
+    flex-shrink: 0;
+    margin-top: 0;
   }
 
   .about-compact-title {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .about-compact-social {
+    padding-left: 0;
     gap: 6px;
   }
 
@@ -308,7 +321,25 @@
   }
 
   .about-compact-btn {
-    font-size: 11px;
-    padding: 3px 6px;
+    font-size: 10px;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-compact-actions {
+    display: none;
+  }
+
+  .about-compact-left {
+    gap: 12px;
+  }
+
+  .about-compact-image-link {
+    cursor: pointer;
+  }
+
+  .about-compact-image-link:active {
+    transform: scale(0.95);
   }
 }
