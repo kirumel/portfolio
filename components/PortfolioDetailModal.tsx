@@ -73,35 +73,34 @@ const PortfolioDetailModal = ({
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedBlocks, setEditedBlocks] = useState<ContentBlock[]>([]);
-  const [editedTitle, setEditedTitle] = useState("");
-  const [editedCategory, setEditedCategory] = useState("");
-  const [editedTags, setEditedTags] = useState<string[]>([]);
-  const [editedImage, setEditedImage] = useState("");
-  const [editedClientName, setEditedClientName] = useState("");
-  const [editedClientImage, setEditedClientImage] = useState("");
-  const [editedClientYoutube, setEditedClientYoutube] = useState("");
-  const [editedClientTwitter, setEditedClientTwitter] = useState("");
   const [saving, setSaving] = useState(false);
-  const [viewerBgColor, setViewerBgColor] = useState("#ffffff");
-  const [viewerAccentColor, setViewerAccentColor] = useState("#2eaadc");
-  const [viewerFontSize, setViewerFontSize] = useState("18px");
-  const [viewerFontFamily, setViewerFontFamily] = useState(
-    "ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif"
-  );
-  const [viewerTagBgColor, setViewerTagBgColor] = useState("#f0f0f0");
-  const [viewerTagTextColor, setViewerTagTextColor] = useState("#555555");
-  const [viewerHeroOverlayColor, setViewerHeroOverlayColor] =
-    useState("rgba(0, 0, 0, 0.9)");
-  const [viewerHeaderTextColor, setViewerHeaderTextColor] = useState(
-    "rgba(55, 53, 47, 0.85)"
-  );
-  const [viewerButtonBgColor, setViewerButtonBgColor] = useState(
-    "rgba(55, 53, 47, 0.08)"
-  );
-  const [viewerButtonTextColor, setViewerButtonTextColor] = useState(
-    "rgba(55, 53, 47, 0.8)"
-  );
+
+  // 편집 데이터를 하나의 객체로 통합
+  const [editedData, setEditedData] = useState({
+    blocks: [] as ContentBlock[],
+    title: "",
+    category: "",
+    tags: [] as string[],
+    image: "",
+    clientName: "",
+    clientImage: "",
+    clientYoutube: "",
+    clientTwitter: "",
+  });
+
+  // 뷰어 스타일을 하나의 객체로 통합
+  const [viewerStyle, setViewerStyle] = useState({
+    bgColor: "#ffffff",
+    accentColor: "#2eaadc",
+    fontSize: "18px",
+    fontFamily: "ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif",
+    tagBgColor: "#f0f0f0",
+    tagTextColor: "#555555",
+    heroOverlayColor: "rgba(0, 0, 0, 0.9)",
+    headerTextColor: "rgba(55, 53, 47, 0.85)",
+    buttonBgColor: "rgba(55, 53, 47, 0.08)",
+    buttonTextColor: "rgba(55, 53, 47, 0.8)",
+  });
 
   const fetchProject = async () => {
     try {
@@ -127,39 +126,35 @@ const PortfolioDetailModal = ({
 
   useEffect(() => {
     if (project) {
-      if (project.contentBlocks) {
-        setEditedBlocks(project.contentBlocks);
-      }
-      setEditedTitle(project.title);
-      setEditedCategory(project.category);
-      setEditedTags(project.tags || []);
-      setEditedImage(project.image);
-      setEditedClientName(project.clientName || "");
-      setEditedClientImage(project.clientImage || "");
-      setEditedClientYoutube(project.clientYoutube || "");
-      setEditedClientTwitter(project.clientTwitter || "");
-      // 뷰어 스타일은 서버에서 로드
-      setViewerBgColor(project.viewerBgColor || "#ffffff");
-      setViewerAccentColor(project.viewerAccentColor || "#2eaadc");
-      setViewerFontSize(project.viewerFontSize || "18px");
-      setViewerFontFamily(
-        project.viewerFontFamily ||
-          "ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif"
-      );
-      setViewerTagBgColor(project.viewerTagBgColor || "#f0f0f0");
-      setViewerTagTextColor(project.viewerTagTextColor || "#555555");
-      setViewerHeroOverlayColor(
-        project.viewerHeroOverlayColor || "rgba(0, 0, 0, 0.9)"
-      );
-      setViewerHeaderTextColor(
-        project.viewerHeaderTextColor || "rgba(55, 53, 47, 0.85)"
-      );
-      setViewerButtonBgColor(
-        project.viewerButtonBgColor || "rgba(55, 53, 47, 0.08)"
-      );
-      setViewerButtonTextColor(
-        project.viewerButtonTextColor || "rgba(55, 53, 47, 0.8)"
-      );
+      setEditedData({
+        blocks: project.contentBlocks || [],
+        title: project.title,
+        category: project.category,
+        tags: project.tags || [],
+        image: project.image,
+        clientName: project.clientName || "",
+        clientImage: project.clientImage || "",
+        clientYoutube: project.clientYoutube || "",
+        clientTwitter: project.clientTwitter || "",
+      });
+
+      setViewerStyle({
+        bgColor: project.viewerBgColor || "#ffffff",
+        accentColor: project.viewerAccentColor || "#2eaadc",
+        fontSize: project.viewerFontSize || "18px",
+        fontFamily:
+          project.viewerFontFamily ||
+          "ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif",
+        tagBgColor: project.viewerTagBgColor || "#f0f0f0",
+        tagTextColor: project.viewerTagTextColor || "#555555",
+        heroOverlayColor:
+          project.viewerHeroOverlayColor || "rgba(0, 0, 0, 0.9)",
+        headerTextColor:
+          project.viewerHeaderTextColor || "rgba(55, 53, 47, 0.85)",
+        buttonBgColor: project.viewerButtonBgColor || "rgba(55, 53, 47, 0.08)",
+        buttonTextColor:
+          project.viewerButtonTextColor || "rgba(55, 53, 47, 0.8)",
+      });
     }
   }, [project]);
 
@@ -223,25 +218,25 @@ const PortfolioDetailModal = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          title: editedTitle,
-          category: editedCategory,
-          image: editedImage,
-          tags: editedTags,
-          contentBlocks: editedBlocks,
-          clientName: editedClientName,
-          clientImage: editedClientImage,
-          clientYoutube: editedClientYoutube,
-          clientTwitter: editedClientTwitter,
-          viewerBgColor: viewerBgColor,
-          viewerAccentColor: viewerAccentColor,
-          viewerFontSize: viewerFontSize,
-          viewerFontFamily: viewerFontFamily,
-          viewerTagBgColor: viewerTagBgColor,
-          viewerTagTextColor: viewerTagTextColor,
-          viewerHeroOverlayColor: viewerHeroOverlayColor,
-          viewerHeaderTextColor: viewerHeaderTextColor,
-          viewerButtonBgColor: viewerButtonBgColor,
-          viewerButtonTextColor: viewerButtonTextColor,
+          title: editedData.title,
+          category: editedData.category,
+          image: editedData.image,
+          tags: editedData.tags,
+          contentBlocks: editedData.blocks,
+          clientName: editedData.clientName,
+          clientImage: editedData.clientImage,
+          clientYoutube: editedData.clientYoutube,
+          clientTwitter: editedData.clientTwitter,
+          viewerBgColor: viewerStyle.bgColor,
+          viewerAccentColor: viewerStyle.accentColor,
+          viewerFontSize: viewerStyle.fontSize,
+          viewerFontFamily: viewerStyle.fontFamily,
+          viewerTagBgColor: viewerStyle.tagBgColor,
+          viewerTagTextColor: viewerStyle.tagTextColor,
+          viewerHeroOverlayColor: viewerStyle.heroOverlayColor,
+          viewerHeaderTextColor: viewerStyle.headerTextColor,
+          viewerButtonBgColor: viewerStyle.buttonBgColor,
+          viewerButtonTextColor: viewerStyle.buttonTextColor,
         }),
       });
 
@@ -271,20 +266,25 @@ const PortfolioDetailModal = ({
             <div
               className="portfolio-detail-header-bar"
               style={{
-                background: viewerBgColor,
-                color: viewerHeaderTextColor,
+                background: viewerStyle.bgColor,
+                color: viewerStyle.headerTextColor,
               }}
             >
               <div className="portfolio-detail-header-left">
                 <div
                   className="portfolio-detail-header-title"
-                  style={{ color: viewerHeaderTextColor }}
+                  style={{ color: viewerStyle.headerTextColor }}
                 >
                   {isEditing ? (
                     <input
                       type="text"
-                      value={editedTitle}
-                      onChange={(e) => setEditedTitle(e.target.value)}
+                      value={editedData.title}
+                      onChange={(e) =>
+                        setEditedData((prev) => ({
+                          ...prev,
+                          title: e.target.value,
+                        }))
+                      }
                       placeholder="제목"
                       className="portfolio-detail-header-title-input"
                     />
@@ -298,22 +298,23 @@ const PortfolioDetailModal = ({
                   {isEditing ? (
                     <input
                       type="text"
-                      value={editedTags.join(", ")}
+                      value={editedData.tags.join(", ")}
                       onChange={(e) => {
                         const value = e.target.value;
-                        setEditedTags(
-                          value
+                        setEditedData((prev) => ({
+                          ...prev,
+                          tags: value
                             .split(",")
                             .map((t) => t.trim())
-                            .filter(Boolean)
-                        );
+                            .filter(Boolean),
+                        }));
                       }}
                       placeholder="태그 (쉼표로 구분)"
                       className="portfolio-detail-header-tags-input"
                       style={{
-                        background: viewerButtonBgColor,
-                        color: viewerButtonTextColor,
-                        borderColor: viewerButtonBgColor,
+                        background: viewerStyle.buttonBgColor,
+                        color: viewerStyle.buttonTextColor,
+                        borderColor: viewerStyle.buttonBgColor,
                       }}
                     />
                   ) : (
@@ -325,8 +326,8 @@ const PortfolioDetailModal = ({
                             key={index}
                             className="portfolio-detail-header-tag"
                             style={{
-                              backgroundColor: viewerTagBgColor,
-                              color: viewerTagTextColor,
+                              backgroundColor: viewerStyle.tagBgColor,
+                              color: viewerStyle.tagTextColor,
                             }}
                           >
                             {tag}
@@ -348,8 +349,8 @@ const PortfolioDetailModal = ({
                           onClick={handleSave}
                           disabled={saving}
                           style={{
-                            background: viewerButtonBgColor,
-                            color: viewerButtonTextColor,
+                            background: viewerStyle.buttonBgColor,
+                            color: viewerStyle.buttonTextColor,
                           }}
                         >
                           {saving ? "저장 중..." : "저장"}
@@ -359,21 +360,17 @@ const PortfolioDetailModal = ({
                           onClick={() => {
                             setIsEditing(false);
                             if (project) {
-                              if (project.contentBlocks) {
-                                setEditedBlocks(project.contentBlocks);
-                              }
-                              setEditedTitle(project.title);
-                              setEditedCategory(project.category);
-                              setEditedTags(project.tags || []);
-                              setEditedImage(project.image);
-                              setEditedClientName(project.clientName || "");
-                              setEditedClientImage(project.clientImage || "");
-                              setEditedClientYoutube(
-                                project.clientYoutube || ""
-                              );
-                              setEditedClientTwitter(
-                                project.clientTwitter || ""
-                              );
+                              setEditedData({
+                                blocks: project.contentBlocks || [],
+                                title: project.title,
+                                category: project.category,
+                                tags: project.tags || [],
+                                image: project.image,
+                                clientName: project.clientName || "",
+                                clientImage: project.clientImage || "",
+                                clientYoutube: project.clientYoutube || "",
+                                clientTwitter: project.clientTwitter || "",
+                              });
                             }
                           }}
                         >
@@ -385,8 +382,8 @@ const PortfolioDetailModal = ({
                         className="portfolio-detail-edit-btn"
                         onClick={() => setIsEditing(true)}
                         style={{
-                          background: viewerButtonBgColor,
-                          color: viewerButtonTextColor,
+                          background: viewerStyle.buttonBgColor,
+                          color: viewerStyle.buttonTextColor,
                         }}
                       >
                         편집
@@ -397,7 +394,7 @@ const PortfolioDetailModal = ({
                 <button
                   className="portfolio-detail-close"
                   onClick={onClose}
-                  style={{ color: viewerHeaderTextColor }}
+                  style={{ color: viewerStyle.headerTextColor }}
                 >
                   <svg
                     width="24"
@@ -421,8 +418,8 @@ const PortfolioDetailModal = ({
               <div className="portfolio-detail-header">
                 <div className="portfolio-detail-image-wrapper">
                   <Image
-                    src={editedImage || project.image}
-                    alt={editedTitle || project.title}
+                    src={editedData.image || project.image}
+                    alt={editedData.title || project.title}
                     fill
                     priority
                   />
@@ -432,8 +429,13 @@ const PortfolioDetailModal = ({
                       {isEditing ? (
                         <input
                           type="text"
-                          value={editedCategory}
-                          onChange={(e) => setEditedCategory(e.target.value)}
+                          value={editedData.category}
+                          onChange={(e) =>
+                            setEditedData((prev) => ({
+                              ...prev,
+                              category: e.target.value,
+                            }))
+                          }
                           placeholder="카테고리"
                           className="portfolio-detail-hero-category-input"
                         />
@@ -449,8 +451,13 @@ const PortfolioDetailModal = ({
                     {isEditing ? (
                       <input
                         type="text"
-                        value={editedTitle}
-                        onChange={(e) => setEditedTitle(e.target.value)}
+                        value={editedData.title}
+                        onChange={(e) =>
+                          setEditedData((prev) => ({
+                            ...prev,
+                            title: e.target.value,
+                          }))
+                        }
                         placeholder="제목"
                         className="portfolio-detail-hero-title-input"
                       />
@@ -463,12 +470,20 @@ const PortfolioDetailModal = ({
                 </div>
                 {isEditing && (
                   <div
-                    style={{ padding: "12px 56px", background: viewerBgColor }}
+                    style={{
+                      padding: "12px 56px",
+                      background: viewerStyle.bgColor,
+                    }}
                   >
                     <input
                       type="text"
-                      value={editedImage}
-                      onChange={(e) => setEditedImage(e.target.value)}
+                      value={editedData.image}
+                      onChange={(e) =>
+                        setEditedData((prev) => ({
+                          ...prev,
+                          image: e.target.value,
+                        }))
+                      }
                       placeholder="썸네일 이미지 URL"
                       style={{
                         width: "100%",
@@ -477,7 +492,7 @@ const PortfolioDetailModal = ({
                         borderRadius: "4px",
                         fontSize: "13px",
                         background: "transparent",
-                        color: viewerButtonTextColor,
+                        color: viewerStyle.buttonTextColor,
                       }}
                     />
                   </div>
@@ -489,10 +504,11 @@ const PortfolioDetailModal = ({
                 className="portfolio-detail-main"
                 style={
                   {
-                    background: viewerBgColor,
-                    fontSize: viewerFontSize,
-                    fontFamily: viewerFontFamily,
-                    "--accent-color": viewerAccentColor,
+                    background: viewerStyle.bgColor,
+                    fontSize: viewerStyle.fontSize,
+                    fontFamily: viewerStyle.fontFamily,
+                    "--accent-color": viewerStyle.accentColor,
+                    "--base-font-size": viewerStyle.fontSize,
                   } as React.CSSProperties
                 }
               >
@@ -505,7 +521,7 @@ const PortfolioDetailModal = ({
                         style={{
                           fontSize: "14px",
                           fontWeight: 600,
-                          color: viewerButtonTextColor,
+                          color: viewerStyle.buttonTextColor,
                           marginBottom: "16px",
                           cursor: "pointer",
                           userSelect: "none",
@@ -533,7 +549,7 @@ const PortfolioDetailModal = ({
                             style={{
                               fontSize: "11px",
                               fontWeight: 600,
-                              color: viewerButtonTextColor,
+                              color: viewerStyle.buttonTextColor,
                               opacity: 0.7,
                             }}
                           >
@@ -541,39 +557,12 @@ const PortfolioDetailModal = ({
                           </label>
                           <input
                             type="color"
-                            value={viewerBgColor}
-                            onChange={(e) => setViewerBgColor(e.target.value)}
-                            style={{
-                              width: "100%",
-                              height: "36px",
-                              cursor: "pointer",
-                              border: "1px solid rgba(55, 53, 47, 0.16)",
-                              borderRadius: "4px",
-                            }}
-                          />
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "6px",
-                          }}
-                        >
-                          <label
-                            style={{
-                              fontSize: "11px",
-                              fontWeight: 600,
-                              color: viewerButtonTextColor,
-                              opacity: 0.7,
-                            }}
-                          >
-                            강조색
-                          </label>
-                          <input
-                            type="color"
-                            value={viewerAccentColor}
+                            value={viewerStyle.bgColor}
                             onChange={(e) =>
-                              setViewerAccentColor(e.target.value)
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                bgColor: e.target.value,
+                              }))
                             }
                             style={{
                               width: "100%",
@@ -595,15 +584,55 @@ const PortfolioDetailModal = ({
                             style={{
                               fontSize: "11px",
                               fontWeight: 600,
-                              color: viewerButtonTextColor,
+                              color: viewerStyle.buttonTextColor,
+                              opacity: 0.7,
+                            }}
+                          >
+                            강조색
+                          </label>
+                          <input
+                            type="color"
+                            value={viewerStyle.accentColor}
+                            onChange={(e) =>
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                accentColor: e.target.value,
+                              }))
+                            }
+                            style={{
+                              width: "100%",
+                              height: "36px",
+                              cursor: "pointer",
+                              border: "1px solid rgba(55, 53, 47, 0.16)",
+                              borderRadius: "4px",
+                            }}
+                          />
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "6px",
+                          }}
+                        >
+                          <label
+                            style={{
+                              fontSize: "11px",
+                              fontWeight: 600,
+                              color: viewerStyle.buttonTextColor,
                               opacity: 0.7,
                             }}
                           >
                             글자 크기
                           </label>
                           <select
-                            value={viewerFontSize}
-                            onChange={(e) => setViewerFontSize(e.target.value)}
+                            value={viewerStyle.fontSize}
+                            onChange={(e) =>
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                fontSize: e.target.value,
+                              }))
+                            }
                             style={{
                               padding: "8px",
                               border: "1px solid rgba(55, 53, 47, 0.16)",
@@ -631,16 +660,19 @@ const PortfolioDetailModal = ({
                             style={{
                               fontSize: "11px",
                               fontWeight: 600,
-                              color: viewerButtonTextColor,
+                              color: viewerStyle.buttonTextColor,
                               opacity: 0.7,
                             }}
                           >
                             폰트
                           </label>
                           <select
-                            value={viewerFontFamily}
+                            value={viewerStyle.fontFamily}
                             onChange={(e) =>
-                              setViewerFontFamily(e.target.value)
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                fontFamily: e.target.value,
+                              }))
                             }
                             style={{
                               padding: "8px",
@@ -671,6 +703,287 @@ const PortfolioDetailModal = ({
                             </option>
                           </select>
                         </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "6px",
+                          }}
+                        >
+                          <label
+                            style={{
+                              fontSize: "11px",
+                              fontWeight: 600,
+                              color: viewerStyle.buttonTextColor,
+                              opacity: 0.7,
+                            }}
+                          >
+                            헤더 텍스트 색상
+                          </label>
+                          <input
+                            type="color"
+                            value={
+                              viewerStyle.headerTextColor.startsWith("rgba")
+                                ? "#37352f"
+                                : viewerStyle.headerTextColor
+                            }
+                            onChange={(e) =>
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                headerTextColor: e.target.value,
+                              }))
+                            }
+                            style={{
+                              width: "100%",
+                              height: "36px",
+                              cursor: "pointer",
+                              border: "1px solid rgba(55, 53, 47, 0.16)",
+                              borderRadius: "4px",
+                            }}
+                          />
+                          <input
+                            type="text"
+                            value={viewerStyle.headerTextColor}
+                            onChange={(e) =>
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                headerTextColor: e.target.value,
+                              }))
+                            }
+                            placeholder="rgba(55, 53, 47, 0.85)"
+                            style={{
+                              padding: "6px 8px",
+                              border: "1px solid rgba(55, 53, 47, 0.16)",
+                              borderRadius: "4px",
+                              fontSize: "11px",
+                              background: "white",
+                              color: "rgba(55, 53, 47, 0.85)",
+                            }}
+                          />
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "6px",
+                          }}
+                        >
+                          <label
+                            style={{
+                              fontSize: "11px",
+                              fontWeight: 600,
+                              color: viewerStyle.buttonTextColor,
+                              opacity: 0.7,
+                            }}
+                          >
+                            태그 배경색
+                          </label>
+                          <input
+                            type="color"
+                            value={viewerStyle.tagBgColor}
+                            onChange={(e) =>
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                tagBgColor: e.target.value,
+                              }))
+                            }
+                            style={{
+                              width: "100%",
+                              height: "36px",
+                              cursor: "pointer",
+                              border: "1px solid rgba(55, 53, 47, 0.16)",
+                              borderRadius: "4px",
+                            }}
+                          />
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "6px",
+                          }}
+                        >
+                          <label
+                            style={{
+                              fontSize: "11px",
+                              fontWeight: 600,
+                              color: viewerStyle.buttonTextColor,
+                              opacity: 0.7,
+                            }}
+                          >
+                            태그 텍스트 색상
+                          </label>
+                          <input
+                            type="color"
+                            value={viewerStyle.tagTextColor}
+                            onChange={(e) =>
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                tagTextColor: e.target.value,
+                              }))
+                            }
+                            style={{
+                              width: "100%",
+                              height: "36px",
+                              cursor: "pointer",
+                              border: "1px solid rgba(55, 53, 47, 0.16)",
+                              borderRadius: "4px",
+                            }}
+                          />
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "6px",
+                          }}
+                        >
+                          <label
+                            style={{
+                              fontSize: "11px",
+                              fontWeight: 600,
+                              color: viewerStyle.buttonTextColor,
+                              opacity: 0.7,
+                            }}
+                          >
+                            버튼 배경색
+                          </label>
+                          <input
+                            type="color"
+                            value={
+                              viewerStyle.buttonBgColor.startsWith("rgba")
+                                ? "#f0f0f0"
+                                : viewerStyle.buttonBgColor
+                            }
+                            onChange={(e) =>
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                buttonBgColor: e.target.value,
+                              }))
+                            }
+                            style={{
+                              width: "100%",
+                              height: "36px",
+                              cursor: "pointer",
+                              border: "1px solid rgba(55, 53, 47, 0.16)",
+                              borderRadius: "4px",
+                            }}
+                          />
+                          <input
+                            type="text"
+                            value={viewerStyle.buttonBgColor}
+                            onChange={(e) =>
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                buttonBgColor: e.target.value,
+                              }))
+                            }
+                            placeholder="rgba(55, 53, 47, 0.08)"
+                            style={{
+                              padding: "6px 8px",
+                              border: "1px solid rgba(55, 53, 47, 0.16)",
+                              borderRadius: "4px",
+                              fontSize: "11px",
+                              background: "white",
+                              color: "rgba(55, 53, 47, 0.85)",
+                            }}
+                          />
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "6px",
+                          }}
+                        >
+                          <label
+                            style={{
+                              fontSize: "11px",
+                              fontWeight: 600,
+                              color: viewerStyle.buttonTextColor,
+                              opacity: 0.7,
+                            }}
+                          >
+                            버튼 텍스트 색상
+                          </label>
+                          <input
+                            type="color"
+                            value={
+                              viewerStyle.buttonTextColor.startsWith("rgba")
+                                ? "#37352f"
+                                : viewerStyle.buttonTextColor
+                            }
+                            onChange={(e) =>
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                buttonTextColor: e.target.value,
+                              }))
+                            }
+                            style={{
+                              width: "100%",
+                              height: "36px",
+                              cursor: "pointer",
+                              border: "1px solid rgba(55, 53, 47, 0.16)",
+                              borderRadius: "4px",
+                            }}
+                          />
+                          <input
+                            type="text"
+                            value={viewerStyle.buttonTextColor}
+                            onChange={(e) =>
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                buttonTextColor: e.target.value,
+                              }))
+                            }
+                            placeholder="rgba(55, 53, 47, 0.8)"
+                            style={{
+                              padding: "6px 8px",
+                              border: "1px solid rgba(55, 53, 47, 0.16)",
+                              borderRadius: "4px",
+                              fontSize: "11px",
+                              background: "white",
+                              color: "rgba(55, 53, 47, 0.85)",
+                            }}
+                          />
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "6px",
+                          }}
+                        >
+                          <label
+                            style={{
+                              fontSize: "11px",
+                              fontWeight: 600,
+                              color: viewerStyle.buttonTextColor,
+                              opacity: 0.7,
+                            }}
+                          >
+                            이미지 오버레이 색상
+                          </label>
+                          <input
+                            type="text"
+                            value={viewerStyle.heroOverlayColor}
+                            onChange={(e) =>
+                              setViewerStyle((prev) => ({
+                                ...prev,
+                                heroOverlayColor: e.target.value,
+                              }))
+                            }
+                            placeholder="rgba(0, 0, 0, 0.9)"
+                            style={{
+                              padding: "6px 8px",
+                              border: "1px solid rgba(55, 53, 47, 0.16)",
+                              borderRadius: "4px",
+                              fontSize: "11px",
+                              background: "white",
+                              color: "rgba(55, 53, 47, 0.85)",
+                            }}
+                          />
+                        </div>
                       </div>
                     </details>
 
@@ -683,7 +996,7 @@ const PortfolioDetailModal = ({
                         style={{
                           fontSize: "14px",
                           fontWeight: 600,
-                          color: viewerButtonTextColor,
+                          color: viewerStyle.buttonTextColor,
                           marginBottom: "16px",
                           cursor: "pointer",
                           userSelect: "none",
@@ -701,8 +1014,13 @@ const PortfolioDetailModal = ({
                       >
                         <input
                           type="text"
-                          value={editedClientImage}
-                          onChange={(e) => setEditedClientImage(e.target.value)}
+                          value={editedData.clientImage}
+                          onChange={(e) =>
+                            setEditedData((prev) => ({
+                              ...prev,
+                              clientImage: e.target.value,
+                            }))
+                          }
                           placeholder="클라이언트 이미지 URL"
                           style={{
                             padding: "10px 12px",
@@ -715,8 +1033,13 @@ const PortfolioDetailModal = ({
                         />
                         <input
                           type="text"
-                          value={editedClientName}
-                          onChange={(e) => setEditedClientName(e.target.value)}
+                          value={editedData.clientName}
+                          onChange={(e) =>
+                            setEditedData((prev) => ({
+                              ...prev,
+                              clientName: e.target.value,
+                            }))
+                          }
                           placeholder="클라이언트 이름"
                           style={{
                             padding: "10px 12px",
@@ -729,9 +1052,12 @@ const PortfolioDetailModal = ({
                         />
                         <input
                           type="text"
-                          value={editedClientYoutube}
+                          value={editedData.clientYoutube}
                           onChange={(e) =>
-                            setEditedClientYoutube(e.target.value)
+                            setEditedData((prev) => ({
+                              ...prev,
+                              clientYoutube: e.target.value,
+                            }))
                           }
                           placeholder="유튜브 URL"
                           style={{
@@ -745,9 +1071,12 @@ const PortfolioDetailModal = ({
                         />
                         <input
                           type="text"
-                          value={editedClientTwitter}
+                          value={editedData.clientTwitter}
                           onChange={(e) =>
-                            setEditedClientTwitter(e.target.value)
+                            setEditedData((prev) => ({
+                              ...prev,
+                              clientTwitter: e.target.value,
+                            }))
                           }
                           placeholder="트위터 URL"
                           style={{
@@ -766,63 +1095,65 @@ const PortfolioDetailModal = ({
                       <style>
                         {`
                            .classic-editor-wrapper {
-                             background: ${viewerBgColor} !important;
-                             border-color: ${viewerButtonBgColor} !important;
+                             background: ${viewerStyle.bgColor} !important;
+                             border-color: ${viewerStyle.buttonBgColor} !important;
                            }
                            .classic-editor-toolbar {
-                             background: ${viewerButtonBgColor} !important;
-                             border-bottom-color: ${viewerButtonBgColor} !important;
+                             background: ${viewerStyle.buttonBgColor} !important;
+                             border-bottom-color: ${viewerStyle.buttonBgColor} !important;
                            }
                            .toolbar-btn {
-                             color: ${viewerButtonTextColor} !important;
+                             color: ${viewerStyle.buttonTextColor} !important;
                              background: transparent !important;
                            }
                            .toolbar-btn:hover {
-                             background: ${viewerButtonBgColor} !important;
+                             background: ${viewerStyle.buttonBgColor} !important;
                            }
                            .classic-editor {
-                             background: ${viewerBgColor} !important;
-                             color: ${viewerButtonTextColor} !important;
-                             font-family: ${viewerFontFamily} !important;
-                             font-size: ${viewerFontSize} !important;
+                             background: ${viewerStyle.bgColor} !important;
+                             color: ${viewerStyle.buttonTextColor} !important;
+                             font-family: ${viewerStyle.fontFamily} !important;
+                             font-size: ${viewerStyle.fontSize} !important;
                            }
                            .classic-editor:empty:before {
-                             color: ${viewerButtonTextColor}80 !important;
+                             color: ${viewerStyle.buttonTextColor}80 !important;
                            }
                            .toolbar-dropdown-menu {
-                             background: ${viewerBgColor} !important;
-                             border-color: ${viewerButtonBgColor} !important;
+                             background: ${viewerStyle.bgColor} !important;
+                             border-color: ${viewerStyle.buttonBgColor} !important;
                            }
                            .toolbar-dropdown-menu button {
-                             color: ${viewerButtonTextColor} !important;
+                             color: ${viewerStyle.buttonTextColor} !important;
                            }
                            .toolbar-dropdown-menu button:hover {
-                             background: ${viewerButtonBgColor} !important;
+                             background: ${viewerStyle.buttonBgColor} !important;
                            }
                            .youtube-modal {
-                             background: ${viewerBgColor} !important;
+                             background: ${viewerStyle.bgColor} !important;
                            }
                            .youtube-modal h3,
                            .youtube-modal-field label {
-                             color: ${viewerButtonTextColor} !important;
+                             color: ${viewerStyle.buttonTextColor} !important;
                            }
                            .youtube-modal-field input,
                            .youtube-size-buttons button,
                            .youtube-align-buttons button {
-                             background: ${viewerBgColor} !important;
-                             color: ${viewerButtonTextColor} !important;
-                             border-color: ${viewerButtonBgColor} !important;
+                             background: ${viewerStyle.bgColor} !important;
+                             color: ${viewerStyle.buttonTextColor} !important;
+                             border-color: ${viewerStyle.buttonBgColor} !important;
                            }
                            .youtube-modal-field input:focus,
                            .youtube-size-buttons button:hover,
                            .youtube-align-buttons button:hover {
-                             background: ${viewerButtonBgColor} !important;
+                             background: ${viewerStyle.buttonBgColor} !important;
                            }
                          `}
                       </style>
                       <BlockEditor
-                        blocks={editedBlocks}
-                        onChange={setEditedBlocks}
+                        blocks={editedData.blocks}
+                        onChange={(blocks) =>
+                          setEditedData((prev) => ({ ...prev, blocks }))
+                        }
                       />
                     </div>
                   </>
@@ -832,8 +1163,8 @@ const PortfolioDetailModal = ({
                     <div
                       className="portfolio-detail-blocks"
                       style={{
-                        fontSize: viewerFontSize,
-                        fontFamily: viewerFontFamily,
+                        fontSize: viewerStyle.fontSize,
+                        fontFamily: viewerStyle.fontFamily,
                       }}
                     >
                       {project.contentBlocks.map((block) => {
@@ -940,424 +1271,77 @@ const PortfolioDetailModal = ({
       {project && !isEditing && (
         <div className="portfolio-side-panel portfolio-side-panel-right">
           <h3 className="side-panel-title">client</h3>
-
-          {isEditing ? (
-            <div className="side-panel-edit">
-              {/* 뷰어 스타일 설정 */}
-              <div className="side-panel-field">
-                <label>뷰어 배경색</label>
-                <div
-                  style={{ display: "flex", gap: "8px", alignItems: "center" }}
-                >
-                  <input
-                    type="color"
-                    value={viewerBgColor}
-                    onChange={(e) => setViewerBgColor(e.target.value)}
-                    style={{
-                      width: "40px",
-                      height: "32px",
-                      cursor: "pointer",
-                      border: "1px solid rgba(55, 53, 47, 0.16)",
-                      borderRadius: "4px",
-                    }}
-                  />
-                  <input
-                    type="text"
-                    value={viewerBgColor}
-                    onChange={(e) => setViewerBgColor(e.target.value)}
-                    placeholder="#ffffff"
-                    className="side-panel-input"
-                    style={{ flex: 1 }}
-                  />
-                </div>
-              </div>
-
-              <div className="side-panel-field">
-                <label>뷰어 강조색</label>
-                <div
-                  style={{ display: "flex", gap: "8px", alignItems: "center" }}
-                >
-                  <input
-                    type="color"
-                    value={viewerAccentColor}
-                    onChange={(e) => setViewerAccentColor(e.target.value)}
-                    style={{
-                      width: "40px",
-                      height: "32px",
-                      cursor: "pointer",
-                      border: "1px solid rgba(55, 53, 47, 0.16)",
-                      borderRadius: "4px",
-                    }}
-                  />
-                  <input
-                    type="text"
-                    value={viewerAccentColor}
-                    onChange={(e) => setViewerAccentColor(e.target.value)}
-                    placeholder="#2eaadc"
-                    className="side-panel-input"
-                    style={{ flex: 1 }}
-                  />
-                </div>
-              </div>
-
-              <div className="side-panel-field">
-                <label>뷰어 글자 크기</label>
-                <select
-                  value={viewerFontSize}
-                  onChange={(e) => setViewerFontSize(e.target.value)}
-                  className="side-panel-input"
-                >
-                  <option value="14px">작게 (14px)</option>
-                  <option value="16px">보통 (16px)</option>
-                  <option value="18px">기본 (18px)</option>
-                  <option value="20px">크게 (20px)</option>
-                  <option value="22px">매우 크게 (22px)</option>
-                </select>
-              </div>
-
-              <div className="side-panel-field">
-                <label>뷰어 폰트</label>
-                <select
-                  value={viewerFontFamily}
-                  onChange={(e) => setViewerFontFamily(e.target.value)}
-                  className="side-panel-input"
-                >
-                  <option value="ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif">
-                    Serif (기본)
-                  </option>
-                  <option value="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
-                    Sans Serif
-                  </option>
-                  <option value="ui-monospace, 'Courier New', monospace">
-                    Monospace
-                  </option>
-                  <option value="'Noto Serif KR', serif">Noto Serif KR</option>
-                  <option value="'Nanum Gothic', sans-serif">나눔고딕</option>
-                  <option value="'Nanum Myeongjo', serif">나눔명조</option>
-                </select>
-              </div>
-
-              <div className="side-panel-field">
-                <label>헤더 글자색</label>
-                <div
-                  style={{ display: "flex", gap: "8px", alignItems: "center" }}
-                >
-                  <input
-                    type="color"
-                    value={
-                      viewerHeaderTextColor.startsWith("rgba")
-                        ? "#37352f"
-                        : viewerHeaderTextColor
-                    }
-                    onChange={(e) => setViewerHeaderTextColor(e.target.value)}
-                    style={{
-                      width: "40px",
-                      height: "32px",
-                      cursor: "pointer",
-                      border: "1px solid rgba(55, 53, 47, 0.16)",
-                      borderRadius: "4px",
-                    }}
-                  />
-                  <input
-                    type="text"
-                    value={viewerHeaderTextColor}
-                    onChange={(e) => setViewerHeaderTextColor(e.target.value)}
-                    placeholder="rgba(55, 53, 47, 0.85)"
-                    className="side-panel-input"
-                    style={{ flex: 1 }}
-                  />
-                </div>
-              </div>
-
-              <div className="side-panel-field">
-                <label>버튼 배경색</label>
-                <div
-                  style={{ display: "flex", gap: "8px", alignItems: "center" }}
-                >
-                  <input
-                    type="color"
-                    value={
-                      viewerButtonBgColor.startsWith("rgba")
-                        ? "#f0f0f0"
-                        : viewerButtonBgColor
-                    }
-                    onChange={(e) => setViewerButtonBgColor(e.target.value)}
-                    style={{
-                      width: "40px",
-                      height: "32px",
-                      cursor: "pointer",
-                      border: "1px solid rgba(55, 53, 47, 0.16)",
-                      borderRadius: "4px",
-                    }}
-                  />
-                  <input
-                    type="text"
-                    value={viewerButtonBgColor}
-                    onChange={(e) => setViewerButtonBgColor(e.target.value)}
-                    placeholder="rgba(55, 53, 47, 0.08)"
-                    className="side-panel-input"
-                    style={{ flex: 1 }}
-                  />
-                </div>
-              </div>
-
-              <div className="side-panel-field">
-                <label>버튼 글자색</label>
-                <div
-                  style={{ display: "flex", gap: "8px", alignItems: "center" }}
-                >
-                  <input
-                    type="color"
-                    value={
-                      viewerButtonTextColor.startsWith("rgba")
-                        ? "#37352f"
-                        : viewerButtonTextColor
-                    }
-                    onChange={(e) => setViewerButtonTextColor(e.target.value)}
-                    style={{
-                      width: "40px",
-                      height: "32px",
-                      cursor: "pointer",
-                      border: "1px solid rgba(55, 53, 47, 0.16)",
-                      borderRadius: "4px",
-                    }}
-                  />
-                  <input
-                    type="text"
-                    value={viewerButtonTextColor}
-                    onChange={(e) => setViewerButtonTextColor(e.target.value)}
-                    placeholder="rgba(55, 53, 47, 0.8)"
-                    className="side-panel-input"
-                    style={{ flex: 1 }}
-                  />
-                </div>
-              </div>
-
-              <div className="side-panel-field">
-                <label>이미지 오버레이 색</label>
-                <input
-                  type="text"
-                  value={viewerHeroOverlayColor}
-                  onChange={(e) => setViewerHeroOverlayColor(e.target.value)}
-                  placeholder="rgba(0, 0, 0, 0.9)"
-                  className="side-panel-input"
-                />
-                <small
-                  style={{
-                    fontSize: "9px",
-                    color: "rgba(55, 53, 47, 0.5)",
-                    marginTop: "4px",
-                  }}
-                >
-                  이미지 위 어두운 부분
-                </small>
-              </div>
-
-              <div className="side-panel-field">
-                <label>태그 배경색</label>
-                <div
-                  style={{ display: "flex", gap: "8px", alignItems: "center" }}
-                >
-                  <input
-                    type="color"
-                    value={viewerTagBgColor}
-                    onChange={(e) => setViewerTagBgColor(e.target.value)}
-                    style={{
-                      width: "40px",
-                      height: "32px",
-                      cursor: "pointer",
-                      border: "1px solid rgba(55, 53, 47, 0.16)",
-                      borderRadius: "4px",
-                    }}
-                  />
-                  <input
-                    type="text"
-                    value={viewerTagBgColor}
-                    onChange={(e) => setViewerTagBgColor(e.target.value)}
-                    placeholder="#f0f0f0"
-                    className="side-panel-input"
-                    style={{ flex: 1 }}
-                  />
-                </div>
-              </div>
-
-              <div className="side-panel-field">
-                <label>태그 텍스트색</label>
-                <div
-                  style={{ display: "flex", gap: "8px", alignItems: "center" }}
-                >
-                  <input
-                    type="color"
-                    value={viewerTagTextColor}
-                    onChange={(e) => setViewerTagTextColor(e.target.value)}
-                    style={{
-                      width: "40px",
-                      height: "32px",
-                      cursor: "pointer",
-                      border: "1px solid rgba(55, 53, 47, 0.16)",
-                      borderRadius: "4px",
-                    }}
-                  />
-                  <input
-                    type="text"
-                    value={viewerTagTextColor}
-                    onChange={(e) => setViewerTagTextColor(e.target.value)}
-                    placeholder="#555555"
-                    className="side-panel-input"
-                    style={{ flex: 1 }}
-                  />
-                </div>
-              </div>
-
-              <div
-                style={{
-                  borderTop: "1px solid rgba(55, 53, 47, 0.08)",
-                  margin: "16px 0",
-                  paddingTop: "16px",
-                }}
-              >
-                <label
-                  style={{
-                    fontSize: "3px",
-                    fontWeight: 700,
-                    color: "rgba(55, 53, 47, 0.5)",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.8px",
-                    display: "block",
-                  }}
-                >
-                  client
-                </label>
-              </div>
-
-              <div className="side-panel-field">
-                <label>클라이언트 이미지 URL</label>
-                <input
-                  type="text"
-                  value={editedClientImage}
-                  onChange={(e) => setEditedClientImage(e.target.value)}
-                  placeholder="이미지 URL 입력"
-                  className="side-panel-input"
-                />
-                {editedClientImage && (
-                  <div className="side-panel-image-preview">
-                    <Image
-                      src={editedClientImage}
-                      alt="클라이언트 이미지"
-                      width={40}
-                      height={40}
-                      style={{ objectFit: "cover", borderRadius: "50%" }}
-                    />
-                  </div>
-                )}
-              </div>
-
-              <div className="side-panel-field">
-                <label>클라이언트 이름</label>
-                <input
-                  type="text"
-                  value={editedClientName}
-                  onChange={(e) => setEditedClientName(e.target.value)}
-                  placeholder="클라이언트 이름"
-                  className="side-panel-input"
-                />
-              </div>
-
-              <div className="side-panel-field">
-                <label>유튜브 URL</label>
-                <input
-                  type="text"
-                  value={editedClientYoutube}
-                  onChange={(e) => setEditedClientYoutube(e.target.value)}
-                  placeholder="https://youtube.com/@username"
-                  className="side-panel-input"
-                />
-              </div>
-
-              <div className="side-panel-field">
-                <label>트위터 URL</label>
-                <input
-                  type="text"
-                  value={editedClientTwitter}
-                  onChange={(e) => setEditedClientTwitter(e.target.value)}
-                  placeholder="https://twitter.com/username"
-                  className="side-panel-input"
-                />
-              </div>
-            </div>
-          ) : (
-            <>
-              {/* AboutCompact 스타일 - 프로필 */}
-              {(project.clientImage || project.clientName) && (
-                <div className="side-panel-profile-section">
-                  <div className="side-panel-profile-main">
-                    {project.clientImage && (
-                      <div className="side-panel-client-image">
-                        <Image
-                          src={project.clientImage}
-                          alt={project.clientName || "클라이언트"}
-                          width={60}
-                          height={60}
-                          style={{ objectFit: "cover", borderRadius: "50%" }}
-                        />
+          <>
+            {/* AboutCompact 스타일 - 프로필 */}
+            {(project.clientImage || project.clientName) && (
+              <div className="side-panel-profile-section">
+                <div className="side-panel-profile-main">
+                  {project.clientImage && (
+                    <div className="side-panel-client-image">
+                      <Image
+                        src={project.clientImage}
+                        alt={project.clientName || "클라이언트"}
+                        width={60}
+                        height={60}
+                        style={{ objectFit: "cover", borderRadius: "50%" }}
+                      />
+                    </div>
+                  )}
+                  {project.clientName && (
+                    <div className="side-panel-client-info">
+                      <div className="side-panel-client-name">
+                        {project.clientName}
                       </div>
-                    )}
-                    {project.clientName && (
-                      <div className="side-panel-client-info">
-                        <div className="side-panel-client-name">
-                          {project.clientName}
-                        </div>
-                        <div className="side-panel-client-role">Client</div>
-                      </div>
-                    )}
-                    {/* 소셜 링크 - 같은 줄에 배치 */}
-                    {(project.clientYoutube || project.clientTwitter) && (
-                      <div className="side-panel-links">
-                        {project.clientYoutube && (
-                          <a
-                            href={project.clientYoutube}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="side-panel-link side-panel-link-youtube"
-                            title="YouTube"
-                            aria-label="YouTube"
-                          >
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                            </svg>
-                          </a>
-                        )}
+                      <div className="side-panel-client-role">Client</div>
+                    </div>
+                  )}
+                  {/* 소셜 링크 - 같은 줄에 배치 */}
+                  {(project.clientYoutube || project.clientTwitter) && (
+                    <div className="side-panel-links">
+                      {project.clientYoutube && (
+                        <a
+                          href={project.clientYoutube}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="side-panel-link side-panel-link-youtube"
+                          title="YouTube"
+                          aria-label="YouTube"
+                        >
+                          <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                          </svg>
+                        </a>
+                      )}
 
-                        {project.clientTwitter && (
-                          <a
-                            href={project.clientTwitter}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="side-panel-link side-panel-link-twitter"
-                            title="Twitter"
-                            aria-label="Twitter"
-                          >
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                            </svg>
-                          </a>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                      {project.clientTwitter && (
+                        <a
+                          href={project.clientTwitter}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="side-panel-link side-panel-link-twitter"
+                          title="Twitter"
+                          aria-label="Twitter"
+                        >
+                          <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {!project.clientName &&
+              !project.clientImage &&
+              !project.clientYoutube &&
+              !project.clientTwitter && (
+                <div className="side-panel-empty">
+                  클라이언트 정보가 없습니다.
                 </div>
               )}
-
-              {!project.clientName &&
-                !project.clientImage &&
-                !project.clientYoutube &&
-                !project.clientTwitter && (
-                  <div className="side-panel-empty">
-                    클라이언트 정보가 없습니다.
-                  </div>
-                )}
-            </>
-          )}
+          </>
         </div>
       )}
     </div>

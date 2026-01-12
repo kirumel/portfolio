@@ -121,8 +121,12 @@ const RichTextEditor = ({
   // 이미지 삽입
   const [showImageModal, setShowImageModal] = useState(false);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [imageLayout, setImageLayout] = useState<"single" | "grid2" | "grid3" | "grid4">("single");
-  const [imageAlign, setImageAlign] = useState<"left" | "center" | "right">("center");
+  const [imageLayout, setImageLayout] = useState<
+    "single" | "grid2" | "grid3" | "grid4"
+  >("single");
+  const [imageAlign, setImageAlign] = useState<"left" | "center" | "right">(
+    "center"
+  );
   const imageSavedRangeRef = useRef<Range | null>(null);
 
   const insertImage = () => {
@@ -197,7 +201,8 @@ const RichTextEditor = ({
         imageHtml = `<div style="margin: 24px 0; ${alignStyle} display: block; max-width: 100%;"><img src="${uploadedUrls[0]}" style="max-width: 100%; height: auto; border-radius: 8px; display: block;" /></div>`;
       } else {
         // 그리드 레이아웃
-        const cols = imageLayout === "grid2" ? 2 : imageLayout === "grid3" ? 3 : 4;
+        const cols =
+          imageLayout === "grid2" ? 2 : imageLayout === "grid3" ? 3 : 4;
         imageHtml = `<div style="display: grid; grid-template-columns: repeat(${cols}, 1fr); gap: 16px; margin: 24px 0; ${alignStyle} max-width: 100%;">`;
         uploadedUrls.forEach((url) => {
           imageHtml += `<div><img src="${url}" style="width: 100%; height: auto; border-radius: 8px; display: block;" /></div>`;
@@ -244,35 +249,38 @@ const RichTextEditor = ({
   const insertTable = () => {
     if (!editorRef.current) return;
 
-    let tableHTML = '<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; margin: 20px 0; border: 1px solid rgba(55, 53, 47, 0.16);">';
-    
+    let tableHTML =
+      '<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; margin: 20px 0; border: 1px solid rgba(55, 53, 47, 0.16);">';
+
     for (let i = 0; i < tableRows; i++) {
-      tableHTML += '<tr>';
+      tableHTML += "<tr>";
       for (let j = 0; j < tableCols; j++) {
         if (i === 0) {
-          tableHTML += '<th style="border: 1px solid rgba(55, 53, 47, 0.16); padding: 8px; background: rgba(55, 53, 47, 0.05); font-weight: 600;">제목</th>';
+          tableHTML +=
+            '<th style="border: 1px solid rgba(55, 53, 47, 0.16); padding: 8px; background: rgba(55, 53, 47, 0.05); font-weight: 600;">제목</th>';
         } else {
-          tableHTML += '<td style="border: 1px solid rgba(55, 53, 47, 0.16); padding: 8px;">내용</td>';
+          tableHTML +=
+            '<td style="border: 1px solid rgba(55, 53, 47, 0.16); padding: 8px;">내용</td>';
         }
       }
-      tableHTML += '</tr>';
+      tableHTML += "</tr>";
     }
-    tableHTML += '</table><p><br></p>';
+    tableHTML += "</table><p><br></p>";
 
     editorRef.current.focus();
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
       range.deleteContents();
-      
+
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = tableHTML;
       const fragment = document.createDocumentFragment();
-      
+
       while (tempDiv.firstChild) {
         fragment.appendChild(tempDiv.firstChild);
       }
-      
+
       range.insertNode(fragment);
     } else {
       editorRef.current.innerHTML += tableHTML;
@@ -723,7 +731,13 @@ const RichTextEditor = ({
                 }}
               />
               {imageFiles.length > 0 && (
-                <div style={{ marginTop: "8px", fontSize: "12px", color: "rgba(55, 53, 47, 0.6)" }}>
+                <div
+                  style={{
+                    marginTop: "8px",
+                    fontSize: "12px",
+                    color: "rgba(55, 53, 47, 0.6)",
+                  }}
+                >
                   {imageFiles.length}개 파일 선택됨
                 </div>
               )}
